@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jaishree & Aditya · 10–11 March 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&text=%E0%A5%90%E0%A4%B6%E0%A5%8D%E0%A4%B0%E0%A5%80&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Pinyon+Script&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blush:#e9c4be; --blush-2:#ecd3cf; --rose:#c99a98; --ink:#5e2f36;
+    --ink-soft:#8a5a5f; --gold:#b48a5a; --gold-soft:#d9bf98; --pearl:#fffaf5;
+    --marigold:#e9a23b; --leaf:#7d8f6a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Cormorant Garamond",Georgia,serif;color:var(--ink);
+    background:var(--blush);
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  body.locked{overflow:hidden;height:100vh}
+  .script{font-family:"Pinyon Script",cursive;font-weight:400}
+  .caps{font-family:"Cinzel",serif;letter-spacing:.22em;text-transform:uppercase;font-size:.72rem;color:var(--ink-soft)}
+  main{max-width:520px;margin:0 auto;padding:0 22px}
+
+  /* ---------- ENVELOPE ---------- */
+  #envelope-screen{
+    position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;
+    background:var(--blush);transition:opacity 1s ease .9s, visibility 0s linear 1.9s;cursor:pointer;
+  }
+  #envelope-screen.open{opacity:0;visibility:hidden}
+  .envelope{position:relative;width:min(78vw,340px);aspect-ratio:3/2;perspective:900px}
+  .env-body{position:absolute;inset:0;background:linear-gradient(135deg,#fbf3f0,#f0dcd7);border-radius:4px;
+    box-shadow:0 18px 40px rgba(94,47,54,.22), inset 0 0 0 1px rgba(180,138,90,.35)}
+  .env-pocket{position:absolute;inset:0;border-radius:4px;
+    background:linear-gradient(to top right,#f3e2de 50%,transparent 50%) left/50.2% 100% no-repeat,
+               linear-gradient(to top left,#efdad5 50%,transparent 50%) right/50.2% 100% no-repeat;z-index:2}
+  .env-flap{position:absolute;left:0;right:0;top:0;height:62%;transform-origin:top;z-index:3;
+    transition:transform 1s cubic-bezier(.6,.05,.3,1) .35s}
+  .env-flap svg{width:100%;height:100%;display:block;filter:drop-shadow(0 3px 3px rgba(94,47,54,.15))}
+  #envelope-screen.open .env-flap{transform:rotateX(180deg);z-index:1}
+  .seal{position:absolute;left:50%;top:62%;width:36%;border-radius:50%;-webkit-mask:radial-gradient(circle,#000 62%,transparent 71%);mask:radial-gradient(circle,#000 62%,transparent 71%);filter:drop-shadow(0 4px 6px rgba(94,47,54,.25));transform:translate(-50%,-50%);z-index:4;
+    transition:transform .6s ease, opacity .5s ease}
+  #envelope-screen.open .seal{transform:translate(-50%,-50%) scale(1.25) rotate(-12deg);opacity:0}
+  .tap{font-family:"Cinzel",serif;letter-spacing:.3em;font-size:.72rem;color:var(--ink-soft);animation:pulse 2.2s ease-in-out infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  .env-names{font-size:1.7rem;color:var(--ink)}
+
+  /* ---------- CURTAINS ---------- */
+  :root{--g:.46}
+  @media (min-width:700px){:root{--g:.3}}
+  @media (min-width:1100px){:root{--g:.24}}
+  .curtain{position:fixed;top:0;bottom:0;width:52%;z-index:20;will-change:transform,clip-path;
+    transition:transform 2.6s cubic-bezier(.62,0,.24,1),clip-path 2.6s cubic-bezier(.62,0,.24,1)}
+  .curtain.left{left:0;transform-origin:left center;clip-path:polygon(0 0,100% 0%,100% 8%,100% 16%,100% 24%,100% 32%,100% 40%,100% 48%,100% 55%,100% 62%,100% 70%,100% 78%,100% 86%,100% 94%,100% 100%,0 100%);box-shadow:12px 0 30px rgba(94,47,54,.25)}
+  .curtain.right{right:0;transform-origin:right center;clip-path:polygon(100% 0,0% 0%,0% 8%,0% 16%,0% 24%,0% 32%,0% 40%,0% 48%,0% 55%,0% 62%,0% 70%,0% 78%,0% 86%,0% 94%,0% 100%,100% 100%);box-shadow:-12px 0 30px rgba(94,47,54,.25)}
+  .curtain .fab{position:absolute;inset:0;background:url(img/curtain.webp) right bottom/cover no-repeat}
+  .curtain.right .fab{transform:scaleX(-1)}
+  .curtain .edge{position:absolute;top:0;bottom:0;width:28px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='44'%3E%3Crect width='28' height='44' fill='%23f6e2dc'/%3E%3Cpath d='M14 5 L22 22 L14 39 L6 22Z' fill='none' stroke='%23b48a5a' stroke-width='1.1'/%3E%3Cpath d='M14 13 L18 22 L14 31 L10 22Z' fill='%23e9c4be'/%3E%3Ccircle cx='14' cy='22' r='2.2' fill='%23fffaf5' stroke='%23d9bf98' stroke-width='.6'/%3E%3Ccircle cx='14' cy='2' r='1.3' fill='%23fffaf5'/%3E%3Cpath d='M1.5 0V44M26.5 0V44' stroke='%23b48a5a' stroke-width='1.4'/%3E%3C/svg%3E");background-size:28px 44px}
+  .curtain.left .edge{right:0} .curtain.right .edge{left:0}
+  .curtain .hem{position:absolute;left:0;right:0;bottom:16px;height:30px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='30'%3E%3Crect width='44' height='30' fill='%23f6e2dc'/%3E%3Cpath d='M5 15 L22 6 L39 15 L22 24Z' fill='none' stroke='%23b48a5a' stroke-width='1.1'/%3E%3Cpath d='M13 15 L22 11 L31 15 L22 19Z' fill='%23e9c4be'/%3E%3Ccircle cx='22' cy='15' r='2.2' fill='%23fffaf5' stroke='%23d9bf98' stroke-width='.6'/%3E%3Cpath d='M0 1.5H44M0 28.5H44' stroke='%23b48a5a' stroke-width='1.4'/%3E%3C/svg%3E");background-size:44px 30px}
+  .curtain .fringe{position:absolute;left:0;right:0;bottom:0;height:16px;
+    background:radial-gradient(circle at 50% 30%,#fffaf5 0 3px,#e3d3c8 3.6px,transparent 4.2px) 0 0/11px 16px repeat-x,
+               linear-gradient(90deg,transparent 4.5px,#b48a5a 4.5px 5.5px,transparent 5.5px) 0 0/11px 9px repeat-x}
+  body.revealed .curtain.left{transform:scaleX(var(--g));clip-path:polygon(0 0,100.0% 0%,83.6% 8%,69.0% 16%,56.4% 24%,45.9% 32%,37.7% 40%,32.1% 48%,30.0% 55%,34.1% 62%,41.8% 70%,51.5% 78%,62.6% 86%,75.0% 94%,85.0% 100%,0 100%)}
+  body.revealed .curtain.right{transform:scaleX(var(--g));clip-path:polygon(100% 0,0.0% 0%,16.4% 8%,31.0% 16%,43.6% 24%,54.1% 32%,62.3% 40%,67.9% 48%,70.0% 55%,65.9% 62%,58.2% 70%,48.5% 78%,37.4% 86%,25.0% 94%,15.0% 100%,100% 100%)}
+  body.exit .curtain{transition:transform 1.3s cubic-bezier(.6,0,.4,1),clip-path 1.3s}
+  body.exit .curtain.left{transform:translateX(-110%) scaleX(var(--g))}
+  body.exit .curtain.right{transform:translateX(110%) scaleX(var(--g))}
+  /* tie-backs */
+  .tie{position:fixed;top:52%;z-index:22;width:34px;opacity:0;transition:opacity .8s ease 1.9s, transform 1.3s cubic-bezier(.6,0,.4,1)}
+  .tie.left{left:calc(52vw * var(--g) * .30 - 17px)}
+  .tie.right{right:calc(52vw * var(--g) * .30 - 17px)}
+  body.revealed .tie{opacity:1}
+  body.exit .tie{opacity:0;transition:opacity .4s}
+  /* valance */
+  .valance{position:fixed;top:0;left:0;right:0;z-index:23;pointer-events:none;--vh:clamp(112px,17vh,190px);height:calc(var(--vh) + 10px);
+    background:
+      url(img/valance-tile.webp) center 10px/auto var(--vh) repeat-x,
+      linear-gradient(#a87c4c,#e2c07e 45%,#a87c4c) 0 calc(5px + var(--vh) * .134)/100% 6px no-repeat,
+      linear-gradient(180deg,#efcfca,#fad7d6) 0 0/100% calc(10px + var(--vh) * .14) no-repeat;
+    filter:drop-shadow(0 6px 10px rgba(94,47,54,.28));transition:transform 1.3s cubic-bezier(.6,0,.4,1)}
+  body.exit .valance{transform:translateY(-130%)}
+  body.curtains-gone .curtain,body.curtains-gone .valance,body.curtains-gone .tie{display:none}
+  /* petals */
+  .petal{position:fixed;top:-30px;z-index:24;width:12px;height:16px;border-radius:70% 0 70% 0;pointer-events:none;
+    animation:fall linear forwards;opacity:.95}
+  @keyframes fall{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(var(--dx),110vh) rotate(var(--r))}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:70px 0;text-align:center;position:relative}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 1.1s ease, transform 1.1s ease}
+  .reveal.in{opacity:1;transform:none}
+  h2{font-family:"Pinyon Script",cursive;font-weight:400;font-size:2.8rem;line-height:1.1;color:var(--ink);margin:6px 0 18px}
+  p.body{font-size:1.18rem;line-height:1.6;color:var(--ink-soft)}
+  .divider{width:200px;margin:14px auto;display:block}
+
+  /* toran / garland across top */
+  .toran{width:100%;display:block;margin:0 auto}
+
+  /* hero */
+  .hero{padding-top:20px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+  .hero .names{font-size:clamp(3rem,15vw,4.6rem);line-height:1;color:var(--ink)}
+  .hero .amp{display:block;font-size:2.2rem;color:var(--gold);margin:4px 0}
+  .hero .date{font-family:"Cinzel",serif;letter-spacing:.25em;font-size:.95rem;margin-top:10px}
+  .hero .place{font-style:italic;font-size:1.2rem;color:var(--ink-soft);margin-top:6px}
+  .art{width:100%;max-width:420px;margin:24px auto 0;display:block}
+  .scroll-hint{margin-top:26px;font-size:.7rem}
+  .scroll-hint span{display:block;margin:8px auto 0;width:1px;height:34px;background:linear-gradient(var(--gold),transparent);animation:drip 2s infinite}
+  @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* countdown */
+  .count{display:flex;justify-content:center;gap:26px;margin-top:14px}
+  .medal{width:80px;height:80px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 35% 30%,#fffaf5,#f1dcd8);
+    box-shadow:0 0 0 3px var(--pearl),0 0 0 4px var(--gold-soft),0 0 0 9px #f6e8e5,0 0 0 10px var(--gold-soft),0 10px 22px rgba(94,47,54,.15)}
+  .medal b{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:2rem;line-height:1}
+  .medal small{font-family:"Cinzel",serif;font-size:.55rem;letter-spacing:.18em;color:var(--ink-soft);margin-top:4px}
+
+  /* events */
+  .event{background:var(--pearl);border-radius:180px 180px 14px 14px;padding:46px 26px 30px;margin:0 auto 34px;max-width:360px;
+    box-shadow:0 0 0 1px rgba(180,138,90,.35),0 0 0 7px var(--pearl),0 0 0 8px rgba(180,138,90,.25),0 18px 40px rgba(94,47,54,.12)}
+  .event svg.icon{width:74px;height:74px;display:block;margin:0 auto 6px}
+  .event h3{font-family:"Pinyon Script",cursive;font-weight:400;font-size:2.4rem;margin:2px 0 6px}
+  .event .when{font-family:"Cinzel",serif;letter-spacing:.14em;font-size:.82rem}
+  .event .time{font-size:1.5rem;font-style:italic;margin:4px 0 2px}
+  .event .where{font-size:1.05rem;color:var(--ink-soft)}
+  .btns{display:flex;gap:8px;justify-content:center;margin-top:18px;flex-wrap:nowrap}
+  .btn{font-family:"Cinzel",serif;font-size:.62rem;letter-spacing:.16em;text-decoration:none;color:var(--ink);
+    border:1px solid var(--gold-soft);border-radius:30px;padding:9px 12px;background:#fbf2ef;white-space:nowrap}
+  .btn:active{background:var(--blush-2)}
+
+  /* story */
+  .arch-wrap{position:relative;max-width:360px;margin:0 auto}
+  .arch-wrap svg{width:100%;display:block}
+  .arch-text{position:absolute;inset:26% 18% 14%;display:flex;flex-direction:column;justify-content:center}
+  .arch-text p{font-size:1.25rem;line-height:1.55;font-style:italic}
+
+  /* timeline */
+  .timeline{position:relative;max-width:340px;margin:18px auto 0;text-align:left}
+  .timeline::before{content:"";position:absolute;left:28px;top:8px;bottom:8px;border-left:1.5px dashed var(--gold-soft)}
+  .tl{display:flex;gap:18px;align-items:flex-start;margin-bottom:26px;position:relative}
+  .tl .dot{flex:0 0 56px;height:56px;border-radius:50%;background:var(--pearl);box-shadow:0 0 0 1px var(--gold-soft);display:flex;align-items:center;justify-content:center;z-index:1}
+  .tl .dot svg{width:34px;height:34px}
+  .tl .t{font-family:"Cinzel",serif;font-size:.75rem;letter-spacing:.14em;color:var(--gold);margin-top:6px}
+  .tl .n{font-size:1.35rem}
+  .tl .d{font-size:1rem;color:var(--ink-soft);font-style:italic}
+
+  footer{padding:50px 0 90px;text-align:center}
+  footer .names{font-size:2.6rem}
+
+  /* dress code */
+  .dress{background:var(--pearl);border-radius:16px;overflow:hidden;max-width:360px;margin:0 auto 30px;
+    box-shadow:0 0 0 1px rgba(180,138,90,.3),0 16px 36px rgba(94,47,54,.1)}
+  .dress-art{background:linear-gradient(#f6e6e2,#efd8d3);padding:18px 0 0}
+  .dress-art svg,.dress-art img{display:block;width:72%;max-width:250px;margin:0 auto}
+  .dress-body{padding:20px 22px 26px}
+  .dress-body h3{font-family:"Pinyon Script",cursive;font-weight:400;font-size:2rem;line-height:1.15;margin:6px 0 8px}
+  .dress-body p{font-size:1.08rem;color:var(--ink-soft);font-style:italic}
+  .swatches{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:6px 0 12px}
+  .swatches span{display:flex;flex-direction:column;align-items:center;gap:5px;font-family:"Cinzel",serif;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+  .swatches i{width:30px;height:30px;border-radius:50%;box-shadow:0 0 0 1px var(--gold-soft),0 0 0 3px var(--pearl),0 0 0 4px var(--gold-soft)}
+  .no-yellow{display:flex;align-items:center;justify-content:center;gap:10px;font-style:normal!important;color:var(--ink)!important}
+  .no-yellow i{width:22px;height:22px;border-radius:50%;background:#f2c94c;position:relative;flex:none;box-shadow:0 0 0 1px #b48a5a}
+  .no-yellow i::after{content:"";position:absolute;left:-3px;right:-3px;top:50%;height:2px;background:#8e1f3a;transform:rotate(-45deg)}
+
+  /* rsvp */
+  .rsvp{background:var(--pearl);border-radius:16px;max-width:360px;margin:6px auto 0;padding:26px 22px;text-align:left;
+    box-shadow:0 0 0 1px rgba(180,138,90,.3),0 16px 36px rgba(94,47,54,.1)}
+  .rsvp label,.rsvp .lbl{display:block;font-family:"Cinzel",serif;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:16px}
+  .rsvp .lbl{margin-bottom:8px}
+  .rsvp input[type=text],.rsvp input[type=tel],.rsvp select,.rsvp textarea{display:block;width:100%;margin-top:7px;font:1.1rem "Cormorant Garamond",serif;color:var(--ink);
+    background:#fbf3f0;border:1px solid var(--gold-soft);border-radius:10px;padding:10px 12px;outline:none;text-transform:none;letter-spacing:0}
+  .rsvp input:focus,.rsvp select:focus,.rsvp textarea:focus{border-color:var(--gold)}
+  .choice,.checks{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .choice label,.checks label{margin:0;flex:1}
+  .choice input,.checks input{position:absolute;opacity:0;pointer-events:none}
+  .choice span,.checks span{display:block;text-align:center;padding:10px 6px;border:1px solid var(--gold-soft);border-radius:30px;background:#fbf3f0;
+    font-family:"Cinzel",serif;font-size:.6rem;letter-spacing:.1em;color:var(--ink-soft);cursor:pointer}
+  .choice input:checked+span,.checks input:checked+span{background:var(--ink);color:var(--pearl);border-color:var(--ink)}
+  .send{display:block;text-align:center;text-decoration:none;background:var(--ink);color:var(--pearl);font-family:"Cinzel",serif;
+    font-size:.72rem;letter-spacing:.18em;padding:15px 10px;border-radius:30px;margin-top:4px}
+  .hint{color:#8e1f3a;font-size:1rem;min-height:0;margin-bottom:6px}
+  .tiny{font-size:.9rem;color:var(--ink-soft);text-align:center;margin-top:10px;font-style:italic}
+
+  /* embroidered artwork */
+  .toran{width:calc(100% + 44px);margin:0 -22px;display:block}
+  .hero{padding-top:0}
+  .hero-art{width:calc(100% + 44px);max-width:none;margin:-54px -22px 0;
+    -webkit-mask:linear-gradient(to bottom,transparent 0,#000 8%,#000 88%,transparent 100%);mask:linear-gradient(to bottom,transparent 0,#000 8%,#000 88%,transparent 100%)}
+  .event img.icon{width:150px;height:150px;border-radius:50%;object-fit:cover;display:block;margin:-6px auto 8px;
+    box-shadow:0 0 0 3px var(--pearl),0 0 0 4px var(--gold-soft),0 8px 18px rgba(94,47,54,.15)}
+  .dress-art{padding:0;background:none}
+  .dress-art img{width:100%;max-width:none;display:block}
+  .arch-wrap img{width:100%;display:block;border-radius:180px 180px 16px 16px;box-shadow:0 16px 36px rgba(94,47,54,.12)}
+  .arch-text{inset:44% 24% 14%}
+  .arch-text p{font-size:1.12rem}
+  .arch-text h2{font-size:2.4rem}
+  .tl .dot{overflow:hidden}
+  .tl .dot img{width:100%;height:100%;object-fit:cover}
+  .event .hall{display:flex;align-items:center;justify-content:center;gap:6px;font-family:"Cinzel",serif;font-size:.76rem;letter-spacing:.12em;color:var(--ink);margin:8px 0 2px;text-transform:uppercase}
+  .event .hall .pin{width:15px;height:15px;flex:none}
+  .checks label{flex:1 1 auto}
+
+  /* stay-back teaser */
+  section.stay{padding:0}
+  .stay-card{max-width:360px;margin:44px auto 0;padding:20px 22px 22px;border-radius:16px;border:1px dashed var(--gold);background:rgba(255,250,245,.55)}
+  .stay-card h3{font-family:"Pinyon Script",cursive;font-weight:400;font-size:1.9rem;line-height:1.15;margin:6px 0 6px}
+  .stay-card p{font-size:1.05rem;font-style:italic;color:var(--ink-soft);line-height:1.45}
+  .stay-btn{display:inline-block;margin-top:14px;font-family:"Cinzel",serif;font-size:.64rem;letter-spacing:.16em;color:var(--pearl);background:var(--ink);text-decoration:none;padding:11px 18px;border-radius:30px}
+
+  /* guide overlay */
+  .guide{position:fixed;inset:0;z-index:60;background:var(--blush);overflow-y:auto;-webkit-overflow-scrolling:touch;
+    transform:translateX(100%);visibility:hidden;transition:transform .55s cubic-bezier(.6,0,.3,1),visibility 0s linear .55s}
+  .guide.open{transform:none;visibility:visible;transition:transform .55s cubic-bezier(.6,0,.3,1)}
+  body.guide-open{overflow:hidden}
+  .g-bar{position:sticky;top:0;z-index:2;padding:12px 16px;background:rgba(233,196,190,.92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-bottom:1px solid rgba(180,138,90,.3)}
+  .g-back{font-family:"Cinzel",serif;font-size:.64rem;letter-spacing:.16em;color:var(--ink);background:none;border:0;cursor:pointer;padding:4px 0}
+  .g-wrap{max-width:560px;margin:0 auto;padding:0 22px 70px;text-align:center}
+  .g-toran{width:calc(100% + 44px);margin:0 -22px 18px;display:block}
+  .g-title{font-size:clamp(2.8rem,13vw,4rem);line-height:1.05;margin:8px 0 2px}
+  .g-sub{font-family:"Cinzel",serif;letter-spacing:.25em;font-size:.82rem;color:var(--gold)}
+  .g-hero{max-width:300px;margin:22px auto 0;border-radius:150px 150px 14px 14px;overflow:hidden;box-shadow:0 0 0 1px var(--gold-soft),0 0 0 6px var(--pearl),0 0 0 7px var(--gold-soft),0 16px 30px rgba(94,47,54,.15)}
+  .g-hero img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 40%}
+  .g-intro{font-size:1.2rem;font-style:italic;line-height:1.55;color:var(--ink-soft);margin:24px 0 8px}
+  .g-sec{margin-top:46px}
+  .g-sec h2{margin-bottom:10px}
+  .g-lead{font-size:1.1rem;color:var(--ink-soft);font-style:italic;margin:-4px 0 18px}
+  .g-places{list-style:none;text-align:left;display:grid;gap:12px}
+  .g-place{display:flex;gap:14px;align-items:flex-start;background:var(--pearl);border-radius:14px;padding:14px 16px;box-shadow:0 0 0 1px rgba(180,138,90,.25)}
+  .g-num{flex:0 0 32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:"Cinzel",serif;font-size:.8rem;color:var(--pearl);background:var(--ink);box-shadow:0 0 0 2px var(--pearl),0 0 0 3px var(--gold-soft)}
+  .g-name{font-size:1.3rem;font-weight:600;line-height:1.2}
+  .g-desc{font-size:1.05rem;color:var(--ink-soft);font-style:italic;line-height:1.4;margin-top:2px}
+  .g-map{display:inline-block;margin-top:6px;font-family:"Cinzel",serif;font-size:.58rem;letter-spacing:.14em;color:var(--gold);text-decoration:none}
+  .g-menu{background:var(--pearl);border-radius:16px;padding:22px 18px 10px;text-align:left;box-shadow:0 0 0 1px var(--gold-soft),0 0 0 6px var(--pearl),0 0 0 7px var(--gold-soft)}
+  .g-menu-h{font-family:"Pinyon Script",cursive;font-size:1.9rem;text-align:center;margin-bottom:10px}
+  .g-menu ol{list-style:none;counter-reset:d}
+  .g-menu li{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding:10px 0;border-bottom:1px dashed rgba(180,138,90,.4)}
+  .g-menu li:last-child{border-bottom:0}
+  .g-dish{font-size:1.2rem;font-weight:600}
+  .g-dots{flex:1 1 20px;border-bottom:1px dotted var(--gold-soft);transform:translateY(-4px);min-width:20px}
+  .g-spot{font-style:italic;font-size:1.05rem;color:var(--ink-soft);text-align:right}
+  .g-spot a{color:var(--ink);text-decoration-color:var(--gold-soft);text-underline-offset:3px}
+  .g-trip{background:var(--pearl);border-radius:16px;padding:18px 20px;margin-bottom:12px;text-align:left;box-shadow:0 0 0 1px rgba(180,138,90,.25)}
+  .g-trip h3{font-family:"Pinyon Script",cursive;font-weight:400;font-size:2.1rem;line-height:1.1;margin:4px 0}
+  .g-trip p{font-size:1.08rem;color:var(--ink-soft);line-height:1.45}
+  .g-chip{display:inline-block;font-family:"Cinzel",serif;font-size:.58rem;letter-spacing:.14em;color:var(--ink);border:1px solid var(--gold-soft);border-radius:20px;padding:5px 10px;background:#fbf2ef}
+  .g-tip{margin:40px auto 0;max-width:420px;padding:20px 22px;border-radius:16px;border:1px dashed var(--gold)}
+  .g-tip p{font-size:1.15rem;font-style:italic;line-height:1.5;margin-top:6px}
+  .g-sign{font-size:2.2rem;line-height:1.3;margin:22px 0 22px}
+  .g-done{border:0;width:100%;max-width:320px;margin:0 auto;cursor:pointer}
+  .rsvp-done{text-align:center}
+  [hidden]{display:none!important}
+
+  .phone-row{display:flex;gap:8px;margin:7px 0 16px}
+  .cc{position:relative;flex:0 0 104px}
+  .cc-show{display:flex;align-items:center;gap:6px;height:100%;padding:0 26px 0 12px;font:1.1rem "Cormorant Garamond",serif;color:var(--ink);background:#fbf3f0;border:1px solid var(--gold-soft);border-radius:10px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235e2f36' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:11px}
+  .cc select{position:absolute!important;inset:0;width:100%!important;height:100%;opacity:0;margin:0!important;cursor:pointer;font-size:16px}
+  .phone-row input{flex:1;margin:0!important;min-width:0}
+  .rsvp label[for]{margin-bottom:0}
+  .checks{display:grid!important;grid-template-columns:1fr;gap:10px!important;flex-wrap:nowrap;margin-bottom:16px}
+  .checks label{display:block!important;position:relative;margin:0!important;flex:none!important}
+  .checks input,.choice input{position:absolute!important;opacity:0;width:1px;height:1px;margin:0;left:0;top:0;pointer-events:none}
+  .choice label{position:relative}
+  .checks span{display:flex!important;align-items:center;gap:12px;text-align:left!important;padding:11px 14px!important;border-radius:10px!important;
+    font-family:"Cormorant Garamond",serif!important;font-size:1.15rem!important;letter-spacing:0!important;text-transform:none;color:var(--ink)!important;background:#fbf3f0!important;border-color:var(--gold-soft)!important}
+  .checks span::before{content:"";flex:0 0 20px;height:20px;border-radius:5px;border:1.5px solid var(--gold);background:#fffaf5 center/14px no-repeat}
+  .checks input:checked+span::before{background-color:var(--ink);border-color:var(--ink);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3 3 7-7' fill='none' stroke='%23fffaf5' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+  .rsvp-sep{display:block;margin:56px auto 0}
+  /* guide fixes */
+  .g-title{line-height:1.25!important;padding-bottom:.12em;margin-bottom:6px!important}
+  .g-menu-img{display:block;width:100%;max-width:340px;margin:0 auto 18px;border-radius:50%;box-shadow:0 0 0 4px var(--pearl),0 0 0 5px var(--gold-soft),0 14px 28px rgba(94,47,54,.15)}
+  .g-trip-img{display:block;width:100%;border-radius:14px;margin:4px 0 14px;box-shadow:0 0 0 1px rgba(180,138,90,.3)}
+  .arch-text{inset:38% 24% 30%!important;justify-content:center!important;align-items:center}
+  .arch-text h2{font-size:2.5rem!important;margin:0!important;line-height:1.2}
+  .story-more .story-lead{font-size:1.3rem;color:var(--ink);line-height:1.5}
+  .story-more{max-width:340px;margin:22px auto 0}
+  .story-more p{font-size:1.15rem;line-height:1.6;font-style:italic;color:var(--ink-soft);margin-bottom:12px}
+  .story-more .story-end{font-family:"Pinyon Script",cursive;font-style:normal;font-size:1.9rem;line-height:1.25;color:var(--ink);margin-top:16px}
+  .families{max-width:380px;margin:30px auto 6px;padding:24px 20px;border-radius:16px;background:rgba(255,250,245,.6);box-shadow:0 0 0 1px rgba(180,138,90,.3),0 0 0 6px rgba(255,250,245,.35)}
+  .fam-name{font-size:2.3rem;line-height:1.2;color:var(--ink);margin:4px 0 6px}
+  .fam-rel{font-size:.98rem;font-style:italic;color:var(--ink-soft);margin-top:4px}
+  .fam-par{font-family:"Cinzel",serif;font-size:.78rem;letter-spacing:.08em;color:var(--ink);line-height:1.6}
+  .fam-amp{font-size:2.2rem;color:var(--gold);margin:12px 0 6px;line-height:1}
+
+  /* section rhythm */
+  section{padding:58px 0}
+  section.hero{padding-bottom:30px}
+  section.stay{padding:58px 0 10px}
+  footer{padding:40px 0 90px!important}
+  .sec-break{display:flex;justify-content:center;position:relative;z-index:1;margin:0 auto}
+  .sec-break svg{width:240px;height:28px;display:block}
+  section.band{position:relative}
+  section.band::before{content:"";position:absolute;top:-14px;bottom:-14px;left:calc(50% - 50vw);right:calc(50% - 50vw);z-index:-1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(255,250,245,0) 0,rgba(255,250,245,.42) 70px,rgba(255,250,245,.42) calc(100% - 70px),rgba(255,250,245,0) 100%)}
+  main{position:relative;z-index:0}
+  body{overflow-x:hidden}
+  .story-door{container-type:inline-size;max-width:380px;box-shadow:none}
+  .story-door img{border-radius:0!important;box-shadow:none!important;width:100%;display:block}
+  .door-text{position:absolute;left:15%;right:15%;top:19.5%;bottom:11%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .door-text h2{font-size:9.6cqw;line-height:1.15;margin:0 0 3.5cqw}
+  .door-text p{font-size:4.25cqw;line-height:1.45;font-style:italic;color:var(--ink-soft);margin:0 0 2.6cqw}
+  .door-text p:first-of-type{color:var(--ink)}
+  .door-text .door-end{font-family:"Pinyon Script",cursive;font-style:normal;font-size:6.6cqw;line-height:1.2;color:var(--ink);margin:1.5cqw 0 0}
+  .story-teaser{max-width:360px;margin:0 auto}
+  .story-teaser h2{margin:4px 0 8px}
+  .story-teaser p{font-size:1.1rem;font-style:italic;color:var(--ink-soft);line-height:1.5}
+  .story-wrap{padding-top:28px}
+  .story-wrap .story-door{margin:0 auto 26px}
+  .hero-lead{font-size:1.15rem;font-style:italic;line-height:1.5;color:var(--ink-soft);max-width:320px;margin:8px auto 0}
+  .env-inv{max-width:280px;text-align:center;line-height:1.8}
+  .scroll-cue{display:block;position:relative;z-index:1;text-indent:.22em;margin:36px auto 0;font-size:.72rem;color:var(--ink-soft);text-decoration:none;cursor:pointer}
+  @media (min-width:700px){.scroll-cue{margin-top:40px}}
+  .scroll-cue span{display:block;margin:8px auto 0;width:1px;height:24px;background:linear-gradient(var(--gold),transparent);animation:drip 2s infinite}
+  .hero-art{transform:translateX(-0.65%)}
+  .toran-wrap{position:relative;width:calc(100% + 44px);margin:0 -22px}
+  .toran-wrap .toran{width:100%;margin:0}
+  .sym{position:absolute;top:30%;transform:translate(-50%,-50%);font-family:"Tiro Devanagari Sanskrit",serif;line-height:1;font-size:clamp(.78rem,4vw,1.2rem);color:#a87c4c;opacity:.7;pointer-events:none}
+  .sym-shri{left:38.2%} .sym-om{left:61.8%}
+  .music-btn{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:55;width:42px;height:42px;border-radius:50%;border:1px solid var(--gold-soft);
+    background:rgba(255,250,245,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;
+    box-shadow:0 6px 16px rgba(94,47,54,.18);padding:0}
+  .music-btn svg{width:20px;height:20px}
+  .music-btn .ic-off{display:none}
+  .music-btn.muted .ic-on{display:none} .music-btn.muted .ic-off{display:block}
+  .music-btn.playing{animation:mpulse 2.4s ease-in-out infinite}
+  @keyframes mpulse{50%{box-shadow:0 0 0 6px rgba(180,138,90,.15),0 6px 16px rgba(94,47,54,.18)}}
+  .send.disabled{opacity:.45;cursor:not-allowed}
+</style>
+</head>
+<body class="locked">
+
+<!-- ================= ENVELOPE ================= -->
+<div id="envelope-screen" role="button" aria-label="Open the invitation">
+  <div class="caps env-inv">You are invited to the wedding celebrations of</div>
+  <div class="envelope">
+    <div class="env-body"></div>
+    <div class="env-flap">
+      <svg viewBox="0 0 300 124" preserveAspectRatio="none"><path d="M0 0 H300 L150 124 Z" fill="#f7e7e3" stroke="#d9bf98" stroke-width="1"/></svg>
+    </div>
+    <div class="env-pocket"></div>
+    <img class="seal" src="img/seal.jpg" alt="J&amp;A wax seal">
+  </div>
+  <div class="script env-names">Jaishree &amp; Aditya</div>
+  <div class="tap">TAP TO OPEN</div>
+</div>
+
+<div class="curtain left"><div class="fab"></div></div>
+<div class="curtain right"><div class="fab"></div></div>
+<div class="tie left"><svg viewBox="0 0 34 120" aria-hidden="true"><path d="M17 0 C8 10 8 22 17 30 C26 22 26 10 17 0Z" fill="none" stroke="#b48a5a" stroke-width="2.2"/><circle cx="17" cy="32" r="6" fill="#d9b36f" stroke="#b48a5a"/><circle cx="17" cy="32" r="2.5" fill="#fffaf5"/><path d="M12 38 H22 L24 46 H10Z" fill="#c99a98" stroke="#b48a5a" stroke-width=".8"/><g stroke="#b48a5a" stroke-width="1"><path d="M11 46 V100 M14 46 V106 M17 46 V110 M20 46 V106 M23 46 V100"/></g><g fill="#fffaf5" stroke="#d9bf98" stroke-width=".5"><circle cx="11" cy="102" r="2"/><circle cx="14" cy="108" r="2"/><circle cx="17" cy="112" r="2.2"/><circle cx="20" cy="108" r="2"/><circle cx="23" cy="102" r="2"/></g><circle cx="17" cy="68" r="3" fill="#e9a23b"/><circle cx="17" cy="80" r="3" fill="#c99a98"/></svg></div><div class="tie right"><svg viewBox="0 0 34 120" aria-hidden="true"><path d="M17 0 C8 10 8 22 17 30 C26 22 26 10 17 0Z" fill="none" stroke="#b48a5a" stroke-width="2.2"/><circle cx="17" cy="32" r="6" fill="#d9b36f" stroke="#b48a5a"/><circle cx="17" cy="32" r="2.5" fill="#fffaf5"/><path d="M12 38 H22 L24 46 H10Z" fill="#c99a98" stroke="#b48a5a" stroke-width=".8"/><g stroke="#b48a5a" stroke-width="1"><path d="M11 46 V100 M14 46 V106 M17 46 V110 M20 46 V106 M23 46 V100"/></g><g fill="#fffaf5" stroke="#d9bf98" stroke-width=".5"><circle cx="11" cy="102" r="2"/><circle cx="14" cy="108" r="2"/><circle cx="17" cy="112" r="2.2"/><circle cx="20" cy="108" r="2"/><circle cx="23" cy="102" r="2"/></g><circle cx="17" cy="68" r="3" fill="#e9a23b"/><circle cx="17" cy="80" r="3" fill="#c99a98"/></svg></div>
+<div class="valance" aria-hidden="true"></div>
+
+<audio id="bgm" src="audio/bg-music.mp3" loop preload="auto"></audio>
+<button type="button" class="music-btn" id="music-btn" aria-label="Play music" hidden>
+  <svg class="ic-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor"/></svg>
+  <svg class="ic-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor"/><path d="M3 3l18 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+</button>
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="toran-wrap"><img class="toran" src="img/toran.jpg" alt=""><span class="sym sym-shri" aria-label="Shri">श्री</span><span class="sym sym-om" aria-label="Om">ॐ</span></div>
+
+    <p class="hero-lead">With the blessings of our families, we joyfully invite you to celebrate the marriage of</p>
+    <h1 class="script names" style="margin-top:10px">Jaishree<span class="amp">&amp;</span>Aditya</h1>
+    <div class="date">10 · 11 MARCH 2027</div>
+    <div class="place">Holiday Inn, Lucknow</div>
+
+    <a class="scroll-cue caps" href="#" id="scroll-cue" aria-label="Scroll down to explore the invitation">Scroll<span></span></a>
+
+    <img class="art hero-art" src="img/rumi-darwaza.jpg" alt="Embroidered Rumi Darwaza, Lucknow">
+  </section>
+
+  <!-- ================= WELCOME ================= -->
+  <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
+  <section class="band reveal">
+    <div class="caps">Swagat hai</div>
+    <h2>Join us in celebration</h2>
+    <p class="body">Together with our families, we warmly invite you to join us for two days of celebrations filled with music, dance, vibrant hues, and delightful feasts, amidst the timeless charm of the City of Nawabs, Lucknow.</p>
+    <div class="families">
+      <div class="fam">
+        <div class="caps">The Bride</div>
+        <div class="script fam-name">Jaishree Garg</div>
+        <div class="fam-rel">Daughter of</div>
+        <div class="fam-par">Shri Vivek Chandra Garg &amp;<br>Late Shrimati Alka Garg</div>
+        <div class="fam-rel">Granddaughter of</div>
+        <div class="fam-par">Late Shri Satish Chandra Garg &amp;<br>Late Shrimati Sheela Garg</div>
+      </div>
+      <div class="fam-amp script">&amp;</div>
+      <div class="fam">
+        <div class="caps">The Groom</div>
+        <div class="script fam-name">Aditya Thorat</div>
+        <div class="fam-rel">Son of</div>
+        <div class="fam-par">Shri Parag Thorat &amp;<br>Shrimati Sunita Thorat</div>
+        <div class="fam-rel">Grandson of</div>
+        <div class="fam-par">Late Shri Tukaram Thorat &amp;<br>Shrimati Indumati Thorat</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COUNTDOWN ================= -->
+  <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
+  <section class="reveal">
+    <div class="caps">Counting down</div>
+    <h2>Until the Celebrations</h2>
+    <div class="count">
+      <div class="medal"><b id="cd-d">–</b><small>DAYS</small></div>
+      <div class="medal"><b id="cd-h">–</b><small>HOURS</small></div>
+      <div class="medal"><b id="cd-m">–</b><small>MINUTES</small></div>
+    </div>
+  </section>
+
+  <!-- ================= EVENTS ================= -->
+  <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
+  <section class="band">
+    <div class="caps reveal">The celebrations</div>
+    <h2 class="reveal">Events</h2>
+
+    <div class="event reveal">
+      <img class="icon" src="img/icon-sangeet.jpg" alt="Dholak and ghungroo">
+      <h3>Engagement &amp; Sangeet</h3>
+      <div class="when">WEDNESDAY · 10 MARCH 2027</div>
+      <div class="time">7 PM onwards</div>
+      <div class="hall"><svg class="pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7z" fill="#5e2f36"/><circle cx="12" cy="9" r="2.6" fill="#fffaf5"/></svg>Sapphire Hall · Ground Floor</div>
+      <div class="where">Holiday Inn, Lucknow</div>
+      <div class="btns">
+        <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Holiday+Inn+Lucknow">OPEN IN MAPS</a>
+        <a class="btn cal" data-cal="engagement-sangeet" target="_blank" rel="noopener" href="#">ADD TO CALENDAR</a>
+      </div>
+    </div>
+
+    <div class="event reveal">
+      <img class="icon" src="img/icon-haldi.jpg" alt="Bowl of haldi">
+      <h3>Haldi</h3>
+      <div class="when">THURSDAY · 11 MARCH 2027</div>
+      <div class="time">9 AM onwards</div>
+      <div class="hall"><svg class="pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7z" fill="#5e2f36"/><circle cx="12" cy="9" r="2.6" fill="#fffaf5"/></svg>Sky 11 Rooftop · Terrace</div>
+      <div class="where">Holiday Inn, Lucknow</div>
+      <div class="btns">
+        <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Holiday+Inn+Lucknow">OPEN IN MAPS</a>
+        <a class="btn cal" data-cal="haldi" target="_blank" rel="noopener" href="#">ADD TO CALENDAR</a>
+      </div>
+    </div>
+
+    <div class="event reveal">
+      <img class="icon" src="img/icon-wedding.jpg" alt="Mandap with kalash">
+      <h3>Wedding</h3>
+      <div class="when">THURSDAY · 11 MARCH 2027</div>
+      <div class="time">5 PM onwards</div>
+      <div class="hall"><svg class="pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7z" fill="#5e2f36"/><circle cx="12" cy="9" r="2.6" fill="#fffaf5"/></svg>Aqua Lawn · 1st Floor</div>
+      <div class="where">Holiday Inn, Lucknow</div>
+      <div class="btns">
+        <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Holiday+Inn+Lucknow">OPEN IN MAPS</a>
+        <a class="btn cal" data-cal="wedding" target="_blank" rel="noopener" href="#">ADD TO CALENDAR</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DRESS CODE ================= -->
+  <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
+  <section>
+    <div class="caps reveal">What to wear</div>
+    <h2 class="reveal">Dress Code</h2>
+
+    <div class="dress reveal">
+      <div class="dress-art">
+        <img src="img/dress-sangeet.jpg" alt="Engagement and Sangeet dress code: Indo-western cocktail glam">
+      </div>
+      <div class="dress-body">
+        <div class="caps">Engagement &amp; Sangeet · 10 March</div>
+        <h3>Indo-Western / Cocktail Glam</h3>
+        <p>Sequins, satin, sharp suits and a dash of sparkle.</p>
+      </div>
+    </div>
+
+    <div class="dress reveal">
+      <div class="dress-art">
+        <img src="img/dress-haldi.jpg" alt="Haldi dress code: green, white, pink and lavender">
+      </div>
+      <div class="dress-body">
+        <div class="caps">Haldi · 11 March</div>
+        <h3>Pastel Pretty</h3>
+        <div class="swatches">
+          <span><i style="background:#8fae86"></i>Green</span>
+          <span><i style="background:#fffaf5"></i>White</span>
+          <span><i style="background:#f2c4cf"></i>Pink</span>
+          <span><i style="background:#c9b6e4"></i>Lavender</span>
+          <span><i style="background:#b9d3ec"></i>Pastel Blue</span>
+        </div>
+        <p class="no-yellow"><i></i>Please do not wear yellow</p>
+      </div>
+    </div>
+
+    <div class="dress reveal">
+      <div class="dress-art">
+        <img src="img/dress-wedding.jpg" alt="Wedding dress code: royal Indian ethnic wear">
+      </div>
+      <div class="dress-body">
+        <div class="caps">Wedding · 11 March</div>
+        <h3>Royal Indian / Ethnic Elegance</h3>
+        <p>Lehengas, sarees, sherwanis and bandhgalas in rich, regal tones.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= OUR STORY ================= -->
+  <!-- ================= TIMELINE ================= -->
+  <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
+  <section class="band reveal">
+    <div class="caps">At a glance</div>
+    <h2>Timeline</h2>
+    <div class="timeline">
+      <div class="tl">
+        <div class="dot"><img src="img/icon-sangeet.jpg" alt=""></div>
+        <div><div class="t">WED 10 MARCH · 7 PM</div><div class="n">Engagement &amp; Sangeet</div><div class="d">Rings, music &amp; dance</div></div>
+      </div>
+      <div class="tl">
+        <div class="dot"><img src="img/icon-haldi.jpg" alt=""></div>
+        <div><div class="t">THU 11 MARCH · 9 AM</div><div class="n">Haldi</div><div class="d">Turmeric, laughter &amp; blessings</div></div>
+      </div>
+      <div class="tl">
+        <div class="dot"><img src="img/icon-wedding.jpg" alt=""></div>
+        <div><div class="t">THU 11 MARCH · 5 PM</div><div class="n">Wedding</div><div class="d">Pheras, vows &amp; celebration</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RSVP ================= -->
+  <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
+  <section class="reveal" id="rsvp">
+    <div class="caps">Kindly respond</div>
+    <h2>RSVP</h2>
+    <form class="rsvp" id="rsvp-form" novalidate>
+      <label>Your name<input id="r-name" type="text" autocomplete="name" placeholder="Full name"></label>
+      <label for="r-phone">Mobile number</label>
+      <div class="phone-row">
+        <div class="cc"><span class="cc-show" id="r-cc-show" aria-hidden="true">🇮🇳 +91</span><select id="r-cc" aria-label="Country code"><option value="+91" data-flag="🇮🇳" selected>🇮🇳 India (+91)</option><option value="+1" data-flag="🇺🇸">🇺🇸 United States (+1)</option><option value="+1" data-flag="🇨🇦">🇨🇦 Canada (+1)</option><option value="+44" data-flag="🇬🇧">🇬🇧 United Kingdom (+44)</option><option value="+353" data-flag="🇮🇪">🇮🇪 Ireland (+353)</option><option value="+61" data-flag="🇦🇺">🇦🇺 Australia (+61)</option><option value="+971" data-flag="🇦🇪">🇦🇪 UAE (Dubai) (+971)</option><option value="+34" data-flag="🇪🇸">🇪🇸 Spain (+34)</option><option value="+977" data-flag="🇳🇵">🇳🇵 Nepal (+977)</option><option value="+65" data-flag="🇸🇬">🇸🇬 Singapore (+65)</option><option value="+64" data-flag="🇳🇿">🇳🇿 New Zealand (+64)</option><option value="+49" data-flag="🇩🇪">🇩🇪 Germany (+49)</option><option value="+33" data-flag="🇫🇷">🇫🇷 France (+33)</option><option value="+31" data-flag="🇳🇱">🇳🇱 Netherlands (+31)</option><option value="+39" data-flag="🇮🇹">🇮🇹 Italy (+39)</option><option value="+41" data-flag="🇨🇭">🇨🇭 Switzerland (+41)</option><option value="+966" data-flag="🇸🇦">🇸🇦 Saudi Arabia (+966)</option><option value="+974" data-flag="🇶🇦">🇶🇦 Qatar (+974)</option><option value="+965" data-flag="🇰🇼">🇰🇼 Kuwait (+965)</option><option value="+968" data-flag="🇴🇲">🇴🇲 Oman (+968)</option><option value="+973" data-flag="🇧🇭">🇧🇭 Bahrain (+973)</option><option value="+60" data-flag="🇲🇾">🇲🇾 Malaysia (+60)</option><option value="+852" data-flag="🇭🇰">🇭🇰 Hong Kong (+852)</option><option value="+81" data-flag="🇯🇵">🇯🇵 Japan (+81)</option><option value="+94" data-flag="🇱🇰">🇱🇰 Sri Lanka (+94)</option><option value="+880" data-flag="🇧🇩">🇧🇩 Bangladesh (+880)</option><option value="+27" data-flag="🇿🇦">🇿🇦 South Africa (+27)</option></select></div>
+        <input id="r-phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="98xxx xxxxx">
+      </div>
+      <div class="lbl">Which side are you from?</div>
+      <div class="choice" role="radiogroup" aria-label="Side">
+        <label><input type="radio" name="r-side" value="Bride's side"><span>Bride's side</span></label>
+        <label><input type="radio" name="r-side" value="Groom's side"><span>Groom's side</span></label>
+      </div>
+      <div class="lbl">Will you be joining us?</div>
+      <div class="choice" role="radiogroup" aria-label="Attendance">
+        <label><input type="radio" name="r-att" value="yes"><span>Joyfully accept</span></label>
+        <label><input type="radio" name="r-att" value="no"><span>Regretfully decline</span></label>
+      </div>
+      <div id="r-yes-fields">
+        <label>Number of guests (including you)
+          <select id="r-count"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+        </label>
+        <div class="lbl">Which events will you attend?</div>
+        <div class="checks">
+          <label><input type="checkbox" class="r-ev" value="Engagement &amp; Sangeet" checked><span>Engagement &amp; Sangeet</span></label>
+          <label><input type="checkbox" class="r-ev" value="Haldi" checked><span>Haldi</span></label>
+          <label><input type="checkbox" class="r-ev" value="Wedding" checked><span>Wedding</span></label>
+        </div>
+      </div>
+      <label>A note for the couple (optional)<textarea id="r-msg" rows="3" placeholder="Your wishes…"></textarea></label>
+      <p class="hint" id="r-hint"></p>
+      <a class="send" id="r-send" role="button" aria-disabled="true" tabindex="0" target="_blank" rel="noopener">SUBMIT RSVP</a>
+    </form>
+    <div class="rsvp rsvp-done" id="rsvp-done" hidden>
+      <div class="script" style="font-size:2.4rem;text-align:center">Thank you!</div>
+      <p class="tiny" style="font-size:1.1rem" id="r-done-msg">Your RSVP has been recorded.</p>
+      <button type="button" class="btn" id="r-again" style="display:block;margin:14px auto 0;cursor:pointer">EDIT / SUBMIT ANOTHER</button>
+    </div>
+  </section>
+
+<!-- ================= STAY BACK TEASER ================= -->
+  <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
+  <section class="reveal stay">
+    <div class="stay-card">
+      <div class="caps">Staying back for the weekend in Lucknow?</div>
+      <h3>Lucknow, the Jaishree &amp; Aditya edit</h3>
+      <p>Taking Friday off? We won't tell your boss. Here's our cheat sheet to kebabs, chaat &amp; Nawabi landmarks.</p>
+      <a class="stay-btn" href="#lucknow">OPEN OUR LUCKNOW GUIDE →</a>
+    </div>
+  </section>
+
+  <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
+  <footer class="reveal">
+    <p class="body" style="margin:14px 0 6px">Your presence is the only blessing we seek.</p>
+    <div class="script names">Jaishree &amp; Aditya</div>
+    <div class="caps" style="margin-top:8px">Lucknow · March 2027</div>
+  </footer>
+
+  
+
+</main>
+
+
+
+<!-- ================= LUCKNOW GUIDE (opens at #lucknow) ================= -->
+<div id="guide" class="guide" role="dialog" aria-modal="true" aria-label="Exploring Lucknow" aria-hidden="true">
+  <div class="g-bar"><button type="button" class="g-back" id="g-back">← BACK TO THE INVITE</button></div>
+  <div class="g-wrap">
+    <img class="g-toran" src="img/toran.jpg" alt="">
+    <div class="caps">Jaishree &amp; Aditya recommend</div>
+    <h1 class="script g-title">Exploring Lucknow</h1>
+    <div class="g-sub">The City of Nawabs</div>
+    <!-- ART SLOT: guide hero -->
+    <div class="g-hero"><img src="img/bara-imambara.jpg" alt="Embroidered Bara Imambara"></div>
+    <p class="g-intro">Whether it's exploring the city's rich history, indulging in its legendary food or experiencing its old-world charm, Lucknow has plenty to offer.</p>
+
+    <div class="g-sec">
+      <div class="caps">Chapter one</div>
+      <h2>Places to Visit</h2>
+      <ol class="g-places"><li class="g-place"><span class="g-num">1</span><div><div class="g-name">Bara Imambara</div><div class="g-desc">One of Lucknow's most iconic historical monuments.</div><a class="g-map" href="https://www.google.com/maps/search/?api=1&query=Bara+Imambara+Lucknow" target="_blank" rel="noopener">View on map ↗</a></div></li><li class="g-place"><span class="g-num">2</span><div><div class="g-name">Chota Imambara</div><div class="g-desc">Known for its stunning interiors and architecture.</div><a class="g-map" href="https://www.google.com/maps/search/?api=1&query=Chota+Imambara+Lucknow" target="_blank" rel="noopener">View on map ↗</a></div></li><li class="g-place"><span class="g-num">3</span><div><div class="g-name">Rumi Darwaza</div><div class="g-desc">An iconic gateway and symbol of Lucknow.</div><a class="g-map" href="https://www.google.com/maps/search/?api=1&query=Rumi+Darwaza+Lucknow" target="_blank" rel="noopener">View on map ↗</a></div></li><li class="g-place"><span class="g-num">4</span><div><div class="g-name">British Residency</div><div class="g-desc">A historic landmark with fascinating stories from 1857.</div><a class="g-map" href="https://www.google.com/maps/search/?api=1&query=British+Residency+Lucknow" target="_blank" rel="noopener">View on map ↗</a></div></li><li class="g-place"><span class="g-num">5</span><div><div class="g-name">Husainabad Clock Tower</div><div class="g-desc">A beautiful landmark near the Imambaras.</div><a class="g-map" href="https://www.google.com/maps/search/?api=1&query=Husainabad+Clock+Tower+Lucknow" target="_blank" rel="noopener">View on map ↗</a></div></li><li class="g-place"><span class="g-num">6</span><div><div class="g-name">Ambedkar Memorial Park</div><div class="g-desc">Impressive architecture and sprawling landscaped grounds.</div><a class="g-map" href="https://www.google.com/maps/search/?api=1&query=Ambedkar+Memorial+Park+Lucknow" target="_blank" rel="noopener">View on map ↗</a></div></li><li class="g-place"><span class="g-num">7</span><div><div class="g-name">Hazratganj</div><div class="g-desc">Perfect for an evening stroll, shopping and exploring the city.</div><a class="g-map" href="https://www.google.com/maps/search/?api=1&query=Hazratganj+Lucknow" target="_blank" rel="noopener">View on map ↗</a></div></li><li class="g-place"><span class="g-num">8</span><div><div class="g-name">Janeshwar Mishra Park</div><div class="g-desc">One of Asia's largest urban parks.</div><a class="g-map" href="https://www.google.com/maps/search/?api=1&query=Janeshwar+Mishra+Park+Lucknow" target="_blank" rel="noopener">View on map ↗</a></div></li></ol>
+    </div>
+
+    <div class="g-sec">
+      <div class="caps">Chapter two</div>
+      <h2>What to Eat</h2>
+      <p class="g-lead">Lucknow is a paradise for food lovers. Don't leave without trying these local favourites!</p>
+      <div class="g-menu"><div class="g-menu-h">The Lucknowi Menu</div><ol><li><span class="g-dish">Galawati Kebabs</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Tunday+Kababi+Lucknow" target="_blank" rel="noopener">Tunday Kababi</a></span></li><li><span class="g-dish">Matar Chaat</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Jain+Chaat+Lucknow" target="_blank" rel="noopener">Jain Chaat</a>, <a href="https://www.google.com/maps/search/?api=1&query=Halwasiya+Chaat+Lucknow" target="_blank" rel="noopener">Halwasiya Chaat</a> or <a href="https://www.google.com/maps/search/?api=1&query=Royal+Cafe+Lucknow" target="_blank" rel="noopener">Royal Cafe</a></span></li><li><span class="g-dish">Khasta Kachori</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Durga+Khasta+Lucknow" target="_blank" rel="noopener">Durga Khasta</a></span></li><li><span class="g-dish">Kachori</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Bachpai+Kachori+Lucknow" target="_blank" rel="noopener">Bachpai Kachori</a></span></li><li><span class="g-dish">Biryani</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Idris+Biryani+Lucknow" target="_blank" rel="noopener">Idris Biryani</a></span></li><li><span class="g-dish">Kulcha Nihari</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Rahim%27s+Lucknow" target="_blank" rel="noopener">Rahim's</a></span></li><li><span class="g-dish">Chai</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Sharma+Ji+Ki+Chai+Lucknow" target="_blank" rel="noopener">Sharma Ji Ki Chai</a></span></li><li><span class="g-dish">Kale Gajar Ka Halwa</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Ram+Asrey+Lucknow" target="_blank" rel="noopener">Ram Asrey</a></span></li><li><span class="g-dish">Chole Bhature</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Sardar+Ji+Ke+Mashoor+Chole+Bhature+Lucknow" target="_blank" rel="noopener">Sardar Ji Ke Mashoor Chole Bhature</a></span></li><li><span class="g-dish">Kulfi</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Prakash+Ki+Mashoor+Kulfi+Lucknow" target="_blank" rel="noopener">Prakash Ki Mashoor Kulfi</a></span></li></ol></div>
+    </div>
+
+    <div class="g-sec">
+      <div class="caps">Chapter three</div>
+      <h2>Nearby Destinations</h2>
+      <p class="g-lead">If you have some extra time, you can also explore two of India's most iconic destinations:</p>
+      <div class="g-trip"><div class="g-chip">≈ 3–4 hrs by road</div><h3>Ayodhya</h3><p>Visit the Ram Mandir and explore the sacred city.</p></div>
+      <div class="g-trip"><div class="g-chip">≈ 5–6 hrs by road</div><h3>Varanasi</h3><p>Experience the Ganga Aarti at Dashashwamedh Ghat, visit the Kashi Vishwanath Temple and explore the city's famous ghats.</p></div>
+    </div>
+
+    <div class="g-tip">
+      <div class="caps">A little tip</div>
+      <p>Make sure to save some room for Lucknow's famous kebabs, chaats, biryani and desserts. The city's food is an experience in itself!</p>
+    </div>
+    <div class="script g-sign">Muskuraiye Aap Lucknow Mein Hai! ❤️</div>
+    <button type="button" class="send g-done" id="g-done">BACK TO THE INVITE</button>
+  </div>
+</div>
+<script>
+  // Envelope → curtains → page
+  const env = document.getElementById('envelope-screen');
+  let opened = false;
+  function petals(){
+    const cols=['#e9a23b','#f0b54d','#d8a3a0','#f2c4cf','#fffaf5','#c0425a'];
+    for(let i=0;i<26;i++){
+      const p=document.createElement('div'); p.className='petal';
+      p.style.left=(Math.random()*100)+'vw';
+      p.style.background=cols[i%cols.length];
+      p.style.setProperty('--dx',(Math.random()*120-60)+'px');
+      p.style.setProperty('--r',(Math.random()*720-360)+'deg');
+      p.style.animationDuration=(3.2+Math.random()*2.6)+'s';
+      p.style.animationDelay=(Math.random()*1.4)+'s';
+      const sc=.7+Math.random()*.7; p.style.width=12*sc+'px'; p.style.height=16*sc+'px';
+      document.body.appendChild(p); setTimeout(()=>p.remove(),7500);
+    }
+  }
+  // Background music: starts softly on the envelope tap (browsers only allow sound after a tap)
+  const bgm=document.getElementById('bgm'), mbtn=document.getElementById('music-btn');
+  let wantMusic=true, fadeT=null;
+  function setBtn(){ const on=!bgm.paused; mbtn.classList.toggle('playing',on); mbtn.classList.toggle('muted',!on); mbtn.setAttribute('aria-label', on?'Pause music':'Play music'); }
+  function fadeTo(v,ms,done){ clearInterval(fadeT); const st=bgm.volume, steps=Math.max(1,ms/50); let i=0;
+    fadeT=setInterval(()=>{ i++; bgm.volume=Math.max(0,Math.min(1,st+(v-st)*i/steps)); if(i>=steps){clearInterval(fadeT); done&&done();} },50); }
+  function playMusic(){ bgm.volume=0; const p=bgm.play(); if(p&&p.then) p.then(()=>{fadeTo(.25,3000); setBtn();}).catch(()=>setBtn()); else setBtn(); }
+  function pauseMusic(){ fadeTo(0,500,()=>{bgm.pause(); setBtn();}); }
+  mbtn.addEventListener("click",()=>{ mbtn.dataset.started="1"; if(bgm.paused){ wantMusic=true; playMusic(); } else { wantMusic=false; pauseMusic(); } });
+  bgm.addEventListener('play',setBtn); bgm.addEventListener('pause',setBtn);
+  document.addEventListener('visibilitychange',()=>{ if(document.hidden){ if(!bgm.paused){ bgm.pause(); } } else if(wantMusic && opened && mbtn.dataset.started){ playMusic(); } });
+
+  function openInvite(){
+    if(opened) return; opened = true;
+    mbtn.hidden=false; mbtn.dataset.started='1'; playMusic();
+    env.classList.add('open');
+    setTimeout(()=>{document.body.classList.add('revealed'); petals();}, 1500);
+    setTimeout(()=>{document.body.classList.add('exit'); document.body.classList.remove('locked');}, 5000);
+    setTimeout(()=>document.body.classList.add('curtains-gone'), 6400);
+  }
+  env.addEventListener('click', openInvite);
+  env.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' ') openInvite(); });
+  env.tabIndex = 0;
+
+  // Remember where the guest was, so returning from the Google tab or the guide lands them back in place
+  const KEY='ja-invite-return';
+  function remember(extra){ try{ localStorage.setItem(KEY, JSON.stringify(Object.assign({y:window.scrollY, at:Date.now()}, extra||{}))); }catch(e){} }
+  function forget(){ try{ localStorage.removeItem(KEY); }catch(e){} }
+  function skipIntro(){
+    mbtn.hidden=false; setBtn();
+    opened = true; env.classList.add('open'); env.style.display='none';
+    document.body.classList.add('revealed','exit','curtains-gone'); document.body.classList.remove('locked');
+  }
+  let RETURN = null;
+  try{ RETURN = JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){}
+  if(RETURN && Date.now()-RETURN.at > 30*60*1000) { RETURN=null; forget(); }
+  if(RETURN || location.hash==='#lucknow'){ skipIntro(); }
+  document.getElementById('scroll-cue').addEventListener('click', e=>{ e.preventDefault();
+    const t=document.querySelector('.sec-break'); window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-10, behavior:'smooth'}); });
+
+  // Countdown to the Engagement & Sangeet, 10 Mar 2027 7 PM IST
+  const target = new Date('2027-03-10T19:00:00+05:30').getTime();
+  function tick(){
+    let s = Math.max(0, Math.floor((target - Date.now())/1000));
+    const d = Math.floor(s/86400); s%=86400;
+    const h = Math.floor(s/3600); s%=3600;
+    const m = Math.floor(s/60);
+    document.getElementById('cd-d').textContent = d;
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 15000);
+
+  // Scroll reveals
+  const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.18});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // RSVP → Google Form (responses land in the linked Google Sheet)
+  // Paste the form's ID and the entry numbers from its pre-filled link here.
+  const RSVP_FORM = {
+    id: '1FAIpQLSdPGnHaPkjEPEcorFiWgIlBJmjWdnNJki85t9ZSngvpxoEpsQ',  // e.g. '1FAIpQLSd...' (from .../forms/d/e/<ID>/viewform)
+    name: 'entry.230160283', phone: 'entry.279519830', side: 'entry.1383735174', attending: 'entry.1338189960', guests: 'entry.770858756', events: 'entry.1212066298', note: 'entry.1507419097'
+  };
+  const FORM_READY = !!(RSVP_FORM.id && RSVP_FORM.name && RSVP_FORM.phone && RSVP_FORM.side && RSVP_FORM.attending);
+  const $ = id => document.getElementById(id);
+  const val = n => (document.querySelector(`input[name="${n}"]:checked`)||{}).value || '';
+  function rsvpData(){
+    const yes = val('r-att') === 'yes';
+    return {
+      name: $('r-name').value.trim(),
+      phone: $('r-cc').value + ' ' + $('r-phone').value.replace(/[^\d]/g,''),
+      side: val('r-side'),
+      attending: val('r-att') ? (yes ? 'Yes' : 'No') : '',
+      guests: yes ? $('r-count').value : '0',
+      events: yes ? [...document.querySelectorAll('.r-ev:checked')].map(e=>e.value).join(', ') : '',
+      note: $('r-msg').value.trim()
+    };
+  }
+  function rsvpUrl(){
+    const d = rsvpData(); const q = new URLSearchParams();
+    for(const k of ['name','phone','side','attending','guests','events','note']) if(RSVP_FORM[k]) q.append(RSVP_FORM[k], d[k]);
+    q.append('submit','Submit');
+    return 'https://docs.google.com/forms/d/e/' + RSVP_FORM.id + '/formResponse?' + q.toString();
+  }
+  function problem(){
+    const d = rsvpData();
+    if(!d.name) return ['Please add your name.', 'r-name'];
+    const digits=$('r-phone').value.replace(/\D/g,''); if(($('r-cc').value==='+91' && digits.length!==10) || digits.length<6 || digits.length>14) return ['Please add a valid mobile number.', 'r-phone'];
+    if(!d.side) return ["Please tell us whose side you're from.", null];
+    if(!d.attending) return ['Please let us know if you will be joining us.', null];
+    if(d.attending==='Yes' && !d.events) return ['Please pick at least one event.', null];
+    return null;
+  }
+  function updateRsvp(){
+    $('r-yes-fields').style.display = val('r-att')==='yes' ? '' : 'none';
+    const ok = FORM_READY && !problem();
+    if(ok){ $('r-send').href = rsvpUrl(); } else { $('r-send').removeAttribute('href'); }
+    $('r-send').classList.toggle('disabled', !ok); $('r-send').setAttribute('aria-disabled', ok?'false':'true');
+    if(!problem()) $('r-hint').textContent='';
+  }
+  $('rsvp-form').addEventListener('input', updateRsvp);
+  $('rsvp-form').addEventListener('change', updateRsvp);
+  $('rsvp-form').addEventListener('submit', e=>e.preventDefault());
+  $('r-send').addEventListener('click', e=>{
+    const pr = problem();
+    if(pr){ e.preventDefault(); $('r-hint').textContent=pr[0]; if(pr[1]) $(pr[1]).focus(); return; }
+    if(!FORM_READY){ e.preventDefault(); $('r-hint').textContent='RSVPs open soon — please check back shortly.'; return; }
+    const d = rsvpData();
+    remember({rsvp:{name:d.name, attending:d.attending}});
+    setTimeout(()=>{ showDone(d); toThanks(false); }, 300);
+  });
+  function toThanks(smooth){
+    const el=$('rsvp-done'); const top=el.getBoundingClientRect().top+window.scrollY;
+    const y=Math.max(0, top - (window.innerHeight - el.offsetHeight)/2);
+    window.scrollTo({top:y, behavior: smooth?'smooth':'instant'});
+  }
+  function showDone(d){
+    $('rsvp-form').hidden = true; $('rsvp-done').hidden = false;
+    $('r-done-msg').textContent = d.attending==='Yes'
+      ? `We can't wait to celebrate with you, ${d.name.split(' ')[0]}!`
+      : `We'll miss you, ${d.name.split(' ')[0]} — thank you for letting us know.`;
+  }
+  // Back on the invite after the Google tab: forget the bookmark once they're settled
+  window.addEventListener('pageshow', ()=>{ setTimeout(forget, 1500); });
+  document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible' && !document.body.classList.contains('guide-open')){ if(!$('rsvp-done').hidden) toThanks(false); setTimeout(forget, 1500); } });
+  $('r-again').addEventListener('click', ()=>{ $('rsvp-done').hidden = true; $('rsvp-form').hidden = false; });
+  $('r-cc').addEventListener('change',()=>{const o=$('r-cc').selectedOptions[0]; $('r-cc-show').textContent=o.dataset.flag+' '+o.value;});
+  updateRsvp();
+
+  // Add to calendar: Apple devices get the .ics file, everyone else Google Calendar
+  const EVENTS = {
+    'engagement-sangeet': {t:'Engagement & Sangeet — Jaishree & Aditya', d:'20270310T133000Z/20270310T173000Z', l:'Sapphire Hall, Ground Floor, Holiday Inn, Lucknow', x:'Dress code: Indo-Western / Cocktail Glam'},
+    'haldi':   {t:'Haldi — Jaishree & Aditya', d:'20270311T033000Z/20270311T063000Z', l:'Sky 11 Rooftop, Terrace, Holiday Inn, Lucknow', x:'Dress code: green, white, pink, lavender or pastel blue. Please do not wear yellow.'},
+    'wedding': {t:'Wedding — Jaishree & Aditya', d:'20270311T113000Z/20270311T173000Z', l:'Aqua Lawn, 1st Floor, Holiday Inn, Lucknow', x:'Dress code: Royal Indian / Ethnic Elegance'}
+  };
+  const ua = navigator.userAgent || '';
+  const isApple = /iPhone|iPad|iPod|Macintosh|Mac OS X/.test(ua) && !/Android/.test(ua);
+  document.querySelectorAll('a.cal').forEach(a=>{
+    const e = EVENTS[a.dataset.cal];
+    if(isApple){
+      const [st,en] = e.d.split('/');
+      const iso = v => v.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,'$1-$2-$3T$4:$5:$6Z');
+      a.href = 'https://ics.agical.io/?subject=' + encodeURIComponent(e.t) + '&organizer=' + encodeURIComponent('Jaishree & Aditya') +
+               '&location=' + encodeURIComponent(e.l) + '&description=' + encodeURIComponent(e.x) +
+               '&dtstart=' + iso(st) + '&dtend=' + iso(en) + '&reminder=1440';
+      
+    } else {
+      a.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(e.t) + '&dates=' + e.d + '&location=' + encodeURIComponent(e.l) + '&details=' + encodeURIComponent(e.x);
+      
+    }
+  });
+
+  // Lucknow guide view (#lucknow)
+  const VIEWS={'#lucknow':'guide'};
+  function route(){
+    let any=false;
+    for(const [h,id] of Object.entries(VIEWS)){
+      const open = location.hash===h; const el=document.getElementById(id);
+      el.classList.toggle('open',open); el.setAttribute('aria-hidden',open?'false':'true');
+      if(open){ el.scrollTop=0; any=true; }
+    }
+    if(any && !wasOpen){ savedY = window.scrollY; remember(); }
+    document.body.classList.toggle('guide-open', any);
+    if(!any && wasOpen){ const y=savedY; requestAnimationFrame(()=>{ window.scrollTo({top:y,behavior:'instant'}); setTimeout(()=>window.scrollTo({top:y,behavior:'instant'}),60); }); forget(); }
+    wasOpen = any;
+  }
+  let savedY = 0, wasOpen = false;
+  function closeGuide(){
+    if(VIEWS[location.hash]){
+      try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){ location.hash=''; }
+    }
+    route();
+  }
+  ['g-back','g-done'].forEach(id=>document.getElementById(id).addEventListener('click', closeGuide));
+  window.addEventListener('hashchange', route);
+  route();
+  if(RETURN){
+    if(RETURN.rsvp) showDone(RETURN.rsvp);
+    document.querySelectorAll('.reveal').forEach(e=>e.classList.add('in'));
+    if(RETURN.rsvp && location.hash!=='#lucknow'){
+      const go=()=>toThanks(false); go(); window.addEventListener('load',go); setTimeout(go,400); setTimeout(go,1200);
+    } else if(location.hash!=='#lucknow'){
+      const y=RETURN.y; window.scrollTo({top:y,behavior:'instant'});
+      window.addEventListener('load',()=>window.scrollTo({top:y,behavior:'instant'})); setTimeout(()=>window.scrollTo({top:y,behavior:'instant'}),400);
+    } else { savedY = RETURN.y; }
+  }
+</script>
+</body>
+</html>
