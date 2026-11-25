@@ -342,6 +342,43 @@
   .rsvp .caps,.rsvp label,.rsvp .lbl{padding-left:0}
   .dress-body h3{white-space:nowrap;font-size:var(--card-title,1.6rem)!important}
   .stay-card h3{font-size:var(--card-title,1.6rem)!important}
+  /* side timeline navigation */
+  .side-nav{position:fixed;right:10px;top:50%;transform:translateY(-50%);z-index:50;padding:6px 0;opacity:0;transition:opacity .6s}
+  .side-nav.on{opacity:1}
+  body.guide-open .side-nav{opacity:0;pointer-events:none}
+  .sn-track{position:absolute;right:9px;top:14px;bottom:14px;width:1.5px;background:rgba(180,138,90,.28);border-radius:2px}
+  .sn-fill{position:absolute;left:0;top:0;width:100%;height:0;background:linear-gradient(var(--gold),#8a6436);border-radius:2px;transition:height .35s ease}
+  .side-nav ol{list-style:none;position:relative;display:flex;flex-direction:column;gap:14px;margin:0;padding:0}
+  .side-nav li{display:flex;align-items:center;justify-content:flex-end;gap:8px;height:20px;cursor:pointer}
+  .sn-label{font-family:"Cinzel",serif;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);white-space:nowrap;
+    padding:4px 9px;border-radius:12px;background:rgba(255,250,245,.92);box-shadow:0 2px 8px rgba(94,47,54,.12);opacity:0;transform:translateX(6px);transition:opacity .3s,transform .3s;pointer-events:none}
+  .sn-dot{flex:none;width:20px;height:20px;display:flex;align-items:center;justify-content:center}
+  .sn-dot i{display:block;width:7px;height:7px;border-radius:50%;background:var(--pearl);box-shadow:0 0 0 1.5px var(--gold-soft);transition:all .3s}
+  .side-nav li.done .sn-dot i{background:var(--gold);box-shadow:0 0 0 1.5px var(--gold)}
+  .side-nav li.active .sn-dot i{width:11px;height:11px;background:var(--ink);box-shadow:0 0 0 2px var(--pearl),0 0 0 3.5px var(--gold)}
+  .side-nav li.active .sn-label{opacity:1;transform:none}
+  @media (hover:hover){.side-nav li:hover .sn-label{opacity:1;transform:none}}
+  @media (max-width:999px){.side-nav{right:0}.sn-dot{width:18px}.sn-track{right:8.25px}.side-nav ol{gap:12px}
+    .side-nav li.active .sn-label{opacity:0;transform:translateX(6px)} .side-nav li.active.flash .sn-label{opacity:1;transform:none}}
+  @media (min-width:1000px){.side-nav{right:22px}.side-nav .sn-label{opacity:.75;transform:none;background:transparent;box-shadow:none}.side-nav li.active .sn-label{opacity:1;background:rgba(255,250,245,.92);box-shadow:0 2px 8px rgba(94,47,54,.12)}}
+  .count{gap:20px!important}
+  .medal{width:62px!important;height:62px!important}
+  .medal b{font-size:1.6rem!important}
+  .medal small{font-size:.5rem!important}
+  @media (max-width:370px){.count{gap:14px!important}.medal{width:52px!important;height:52px!important;box-shadow:0 0 0 2px var(--pearl),0 0 0 3px var(--gold-soft),0 0 0 6px #f6e8e5,0 0 0 7px var(--gold-soft),0 8px 18px rgba(94,47,54,.15)!important}.medal b{font-size:1.35rem!important}.medal small{font-size:.44rem!important;letter-spacing:.12em!important}}
+  #cd-s.tick{animation:sectick .6s ease-out}
+  @keyframes sectick{0%{opacity:.35;transform:translateY(-3px)}100%{opacity:1;transform:none}}
+  .fd{display:inline-block;flex:none;width:11px;height:11px;border:1.3px solid;border-radius:2px;position:relative;margin-right:8px;vertical-align:1px;opacity:.85}
+  .fd::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+  .fd-v{border-color:#4f8a4b}.fd-v::after{width:5px;height:5px;border-radius:50%;background:#4f8a4b}
+  .fd-nv{border-color:#9b4a3c}.fd-nv::after{width:0;height:0;border-left:3px solid transparent;border-right:3px solid transparent;border-bottom:5px solid #9b4a3c;transform:translate(-50%,-60%)}
+  .g-legend{display:flex;justify-content:center;gap:18px;margin:-4px 0 10px;font-family:"Cinzel",serif;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .g-legend span{display:inline-flex;align-items:center}
+  .g-legend .fd{margin-right:6px;vertical-align:0}
+  .g-hint{display:inline-flex;align-items:center;gap:6px;margin:4px auto 0;padding:6px 12px;border-radius:20px;background:rgba(255,250,245,.6);box-shadow:0 0 0 1px rgba(180,138,90,.3);
+    font-family:"Cinzel",serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);line-height:1.4}
+  .g-hint svg{width:13px;height:13px;flex:none;color:var(--ink)}
+  .g-hint-sm{display:block;background:none;box-shadow:none;padding:0;margin:-10px 0 16px;color:var(--ink-soft);font-size:.56rem}
 </style>
 </head>
 <body class="locked">
@@ -371,10 +408,14 @@
   <svg class="ic-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor"/></svg>
   <svg class="ic-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor"/><path d="M3 3l18 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
 </button>
+<nav class="side-nav" id="side-nav" aria-label="Sections" hidden>
+  <div class="sn-track"><div class="sn-fill" id="sn-fill"></div></div>
+  <ol id="sn-list"></ol>
+</nav>
 <main>
 
   <!-- ================= HERO ================= -->
-  <section class="hero">
+  <section class="hero" id="s-home" data-nav="Home">
     <div class="toran-wrap"><img class="toran" src="img/toran.jpg" alt=""><span class="sym sym-shri" aria-label="Shri">श्री</span><span class="sym sym-om" aria-label="Om">ॐ</span></div>
 
     <p class="hero-lead">With the blessings of our families, we joyfully invite you to celebrate the marriage of</p>
@@ -389,7 +430,7 @@
 
   <!-- ================= WELCOME ================= -->
   <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
-  <section class="band reveal">
+  <section class="band reveal" id="s-welcome" data-nav="Welcome">
     <div class="caps">Swagat hai</div>
     <h2>Join us in celebration</h2>
     <p class="body">Together with our families, we warmly invite you to join us for two days of celebrations filled with music, dance, vibrant hues, and delightful feasts, amidst the timeless charm of the City of Nawabs, Lucknow.</p>
@@ -416,19 +457,20 @@
 
   <!-- ================= COUNTDOWN ================= -->
   <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
-  <section class="reveal">
+  <section class="reveal" id="s-countdown" data-nav="Countdown">
     <div class="caps">Counting down</div>
     <h2>Until the Celebrations</h2>
     <div class="count">
       <div class="medal"><b id="cd-d">–</b><small>DAYS</small></div>
       <div class="medal"><b id="cd-h">–</b><small>HOURS</small></div>
       <div class="medal"><b id="cd-m">–</b><small>MINUTES</small></div>
+      <div class="medal"><b id="cd-s">–</b><small>SECONDS</small></div>
     </div>
   </section>
 
   <!-- ================= EVENTS ================= -->
   <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
-  <section class="band">
+  <section class="band" id="s-events" data-nav="Events">
     <div class="caps reveal">The celebrations</div>
     <h2 class="reveal">Events</h2>
 
@@ -474,7 +516,7 @@
 
   <!-- ================= DRESS CODE ================= -->
   <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
-  <section>
+  <section id="s-dress" data-nav="Dress Code">
     <div class="caps reveal">What to wear</div>
     <h2 class="reveal">Dress Code</h2>
 
@@ -522,7 +564,7 @@
   <!-- ================= OUR STORY ================= -->
   <!-- ================= TIMELINE ================= -->
   <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
-  <section class="band reveal">
+  <section class="band reveal" id="s-timeline" data-nav="Timeline">
     <div class="caps">At a glance</div>
     <h2>Timeline</h2>
     <div class="timeline">
@@ -543,7 +585,7 @@
 
   <!-- ================= RSVP ================= -->
   <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
-  <section class="reveal" id="rsvp">
+  <section class="reveal" id="rsvp" data-nav="RSVP">
     <div class="caps">Kindly respond</div>
     <h2>RSVP</h2>
     <form class="rsvp" id="rsvp-form" novalidate>
@@ -587,7 +629,7 @@
 
 <!-- ================= STAY BACK TEASER ================= -->
   <div class="sec-break" aria-hidden="true"><svg viewBox="0 0 260 30"><defs><linearGradient id="fl" x1="0" x2="1"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient><linearGradient id="fr" x1="1" x2="0"><stop offset="0" stop-color="#b48a5a" stop-opacity="0"/><stop offset="1" stop-color="#b48a5a"/></linearGradient></defs><path d="M0 15 H98" stroke="url(#fl)" stroke-width=".9"/><path d="M162 15 H260" stroke="url(#fr)" stroke-width=".9"/><path d="M104 15 C110 8 118 8 121 15 C118 22 110 22 104 15Z" fill="#c99a98"/><path d="M156 15 C150 8 142 8 139 15 C142 22 150 22 156 15Z" fill="#c99a98"/><circle cx="100" cy="15" r="1.6" fill="#b48a5a"/><circle cx="160" cy="15" r="1.6" fill="#b48a5a"/><path d="M130 4 L141 15 L130 26 L119 15Z" fill="#5e2f36"/><path d="M130 9 L136 15 L130 21 L124 15Z" fill="#fffaf5"/><circle cx="130" cy="15" r="2.2" fill="#b48a5a"/></svg></div>
-  <section class="reveal stay">
+  <section class="reveal stay" id="s-weekend" data-nav="Weekend">
     <div class="stay-card">
       <div class="caps">Staying back for the weekend in Lucknow?</div>
       <h3>The Jaishree &amp; Aditya Edit</h3>
@@ -620,6 +662,7 @@
     <!-- ART SLOT: guide hero -->
     <div class="g-hero"><img src="img/bara-imambara.jpg" alt="Embroidered Bara Imambara"></div>
     <p class="g-intro">Whether it's exploring the city's rich history, indulging in its legendary food or experiencing its old-world charm, Lucknow has plenty to offer.</p>
+    <p class="g-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7z" fill="currentColor"/><circle cx="12" cy="9" r="2.6" fill="#fffaf5"/></svg>Tap ‘View on map’ or any eatery’s name to navigate there</p>
 
     <div class="g-sec">
       <div class="caps">Chapter one</div>
@@ -631,7 +674,8 @@
       <div class="caps">Chapter two</div>
       <h2>What to Eat</h2>
       <p class="g-lead">Lucknow is a paradise for food lovers. Don't leave without trying these local favourites!</p>
-      <div class="g-menu"><div class="g-menu-h">The Lucknowi Menu</div><ol><li><span class="g-dish">Galawati Kebabs</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Tunday+Kababi+Lucknow" target="_blank" rel="noopener">Tunday Kababi</a></span></li><li><span class="g-dish">Matar Chaat</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Jain+Chaat+Lucknow" target="_blank" rel="noopener">Jain Chaat</a>, <a href="https://www.google.com/maps/search/?api=1&query=Halwasiya+Chaat+Lucknow" target="_blank" rel="noopener">Halwasiya Chaat</a> or <a href="https://www.google.com/maps/search/?api=1&query=Royal+Cafe+Lucknow" target="_blank" rel="noopener">Royal Cafe</a></span></li><li><span class="g-dish">Khasta Kachori</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Durga+Khasta+Lucknow" target="_blank" rel="noopener">Durga Khasta</a></span></li><li><span class="g-dish">Poori Sabzi</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Bachpai+Kachori+Lucknow" target="_blank" rel="noopener">Bachpai Kachori</a></span></li><li><span class="g-dish">Biryani</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Idris+Biryani+Lucknow" target="_blank" rel="noopener">Idris Biryani</a></span></li><li><span class="g-dish">Kulcha Nihari</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Rahim%27s+Lucknow" target="_blank" rel="noopener">Rahim's</a></span></li><li><span class="g-dish">Chai</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Sharma+Ji+Ki+Chai+Lucknow" target="_blank" rel="noopener">Sharma Ji Ki Chai</a></span></li><li><span class="g-dish">Kale Gajar Ka Halwa</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Ram+Asrey+Lucknow" target="_blank" rel="noopener">Ram Asrey</a></span></li><li><span class="g-dish">Chole Bhature</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Sardar+Ji+Ke+Mashoor+Chole+Bhature+Lucknow" target="_blank" rel="noopener">Sardar Ji Ke Mashoor Chole Bhature</a></span></li><li><span class="g-dish">Kulfi</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Prakash+Ki+Mashoor+Kulfi+Lucknow" target="_blank" rel="noopener">Prakash Ki Mashoor Kulfi</a></span></li></ol></div>
+      <p class="g-hint g-hint-sm">Tap an eatery’s name to navigate there</p>
+      <div class="g-menu"><div class="g-menu-h">The Lucknowi Menu</div><ol><li><span class="g-dish"><i class="fd fd-nv" role="img" aria-label="Non-vegetarian" title="Non-vegetarian"></i>Galawati Kebabs</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Tunday+Kababi+Lucknow" target="_blank" rel="noopener">Tunday Kababi</a></span></li><li><span class="g-dish"><i class="fd fd-v" role="img" aria-label="Vegetarian" title="Vegetarian"></i>Matar Chaat</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Jain+Chaat+Lucknow" target="_blank" rel="noopener">Jain Chaat</a> or <a href="https://www.google.com/maps/search/?api=1&query=Halwasiya+Chaat+Lucknow" target="_blank" rel="noopener">Halwasiya Chaat</a></span></li><li><span class="g-dish"><i class="fd fd-v" role="img" aria-label="Vegetarian" title="Vegetarian"></i>Basket Chaat</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Royal+Cafe+Lucknow" target="_blank" rel="noopener">Royal Cafe</a></span></li><li><span class="g-dish"><i class="fd fd-v" role="img" aria-label="Vegetarian" title="Vegetarian"></i>Khasta Kachori</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Durga+Khasta+Lucknow" target="_blank" rel="noopener">Durga Khasta</a></span></li><li><span class="g-dish"><i class="fd fd-v" role="img" aria-label="Vegetarian" title="Vegetarian"></i>Poori Sabzi</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Bachpai+Kachori+Lucknow" target="_blank" rel="noopener">Bachpai Kachori</a></span></li><li><span class="g-dish"><i class="fd fd-nv" role="img" aria-label="Non-vegetarian" title="Non-vegetarian"></i>Biryani</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Idris+Biryani+Lucknow" target="_blank" rel="noopener">Idris Biryani</a></span></li><li><span class="g-dish"><i class="fd fd-nv" role="img" aria-label="Non-vegetarian" title="Non-vegetarian"></i>Kulcha Nihari</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Rahim%27s+Lucknow" target="_blank" rel="noopener">Rahim's</a></span></li><li><span class="g-dish"><i class="fd fd-v" role="img" aria-label="Vegetarian" title="Vegetarian"></i>Chai</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Sharma+Ji+Ki+Chai+Lucknow" target="_blank" rel="noopener">Sharma Ji Ki Chai</a></span></li><li><span class="g-dish"><i class="fd fd-v" role="img" aria-label="Vegetarian" title="Vegetarian"></i>Kale Gajar Ka Halwa</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Ram+Asrey+Lucknow" target="_blank" rel="noopener">Ram Asrey</a></span></li><li><span class="g-dish"><i class="fd fd-v" role="img" aria-label="Vegetarian" title="Vegetarian"></i>Chole Bhature</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Sardar+Ji+Ke+Mashoor+Chole+Bhature+Lucknow" target="_blank" rel="noopener">Sardar Ji Ke Mashoor Chole Bhature</a></span></li><li><span class="g-dish"><i class="fd fd-v" role="img" aria-label="Vegetarian" title="Vegetarian"></i>Kulfi</span><span class="g-dots"></span><span class="g-spot"><a href="https://www.google.com/maps/search/?api=1&query=Prakash+Ki+Mashoor+Kulfi+Lucknow" target="_blank" rel="noopener">Prakash Ki Mashoor Kulfi</a></span></li></ol></div>
     </div>
 
     <div class="g-sec">
@@ -714,12 +758,13 @@
     let s = Math.max(0, Math.floor((target - Date.now())/1000));
     const d = Math.floor(s/86400); s%=86400;
     const h = Math.floor(s/3600); s%=3600;
-    const m = Math.floor(s/60);
+    const m = Math.floor(s/60); const sec = s%60;
     document.getElementById('cd-d').textContent = d;
     document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
     document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    const se=document.getElementById('cd-s'); se.textContent = String(sec).padStart(2,'0'); se.classList.remove('tick'); void se.offsetWidth; se.classList.add('tick');
   }
-  tick(); setInterval(tick, 15000);
+  tick(); setInterval(tick, 1000);
 
   // Scroll reveals
   const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.18});
@@ -863,6 +908,41 @@
       window.addEventListener('load',()=>window.scrollTo({top:y,behavior:'instant'})); setTimeout(()=>window.scrollTo({top:y,behavior:'instant'}),400);
     } else { savedY = RETURN.y; }
   }
+  // Side timeline navigation
+  (function(){
+    const nav=document.getElementById('side-nav'), list=document.getElementById('sn-list'), fill=document.getElementById('sn-fill');
+    const secs=[...document.querySelectorAll('main [data-nav]')];
+    secs.forEach((sec,i)=>{
+      const li=document.createElement('li'); li.dataset.i=i;
+      li.innerHTML='<span class="sn-label">'+sec.dataset.nav+'</span><span class="sn-dot"><i></i></span>';
+      li.setAttribute('role','link'); li.setAttribute('aria-label','Go to '+sec.dataset.nav); li.tabIndex=0;
+      const go=()=>{ document.querySelectorAll('.reveal').forEach(e=>e.classList.add('in'));
+        const y=sec===secs[0]?0:sec.getBoundingClientRect().top+window.scrollY-8; window.scrollTo({top:y,behavior:'smooth'}); setActive(i); };
+      li.addEventListener('click',go); li.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();go();} });
+      list.appendChild(li);
+    });
+    const items=[...list.children];
+    let last=-1, flashT=0;
+    function setActive(a){
+      if(a!==last){ last=a; clearTimeout(flashT); items.forEach(li=>li.classList.remove('flash')); items[a].classList.add('flash'); flashT=setTimeout(()=>items[a].classList.remove('flash'),1600); }
+      items.forEach((li,j)=>{ li.classList.toggle('active',j===a); li.classList.toggle('done',j<a); });
+      const first=items[0].getBoundingClientRect(), cur=items[a].getBoundingClientRect();
+      fill.style.height=Math.max(0,(cur.top+cur.height/2)-(first.top+first.height/2))+'px';
+    }
+    function update(){
+      const mid=window.innerHeight*0.4; let a=0;
+      secs.forEach((sec,i)=>{ if(sec.getBoundingClientRect().top<=mid) a=i; });
+      if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4) a=secs.length-1;
+      setActive(a);
+    }
+    function show(){ nav.hidden=false; requestAnimationFrame(()=>{ nav.classList.add('on'); update(); }); }
+    let raf=0; window.addEventListener('scroll',()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(update); },{passive:true});
+    window.addEventListener('resize',update);
+    const obs=new MutationObserver(()=>{ if(document.body.classList.contains('curtains-gone')||!document.body.classList.contains('locked')&&document.body.classList.contains('exit')) { show(); obs.disconnect(); } });
+    obs.observe(document.body,{attributes:true,attributeFilter:['class']});
+    if(document.body.classList.contains('curtains-gone')) show();
+  })();
+
 </script>
 </body>
 </html>
